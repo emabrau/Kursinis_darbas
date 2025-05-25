@@ -420,7 +420,7 @@ plot_data <- bind_rows(
         ),
         Salis = factor(
             Salis,
-            levels = c("Lietuva", "Latvija", "Estija", "Lenkija")  # Pakeista tvarka
+            levels = c("Lietuva", "Latvija", "Estija", "Lenkija")  
         )
     )
 
@@ -525,7 +525,7 @@ plot_data <- bind_rows(
     mutate(
         Klausimas = belong_questions[Klausimo_ID],
         Atsakymas = factor(atsakymas_lt[Atsakymas], levels = atsakymu_tvarka),
-        Salis = factor(Salis, levels = c("Lietuva", "Latvija", "Estija", "Lenkija"))  # <- ČIA svarbu
+        Salis = factor(Salis, levels = c("Lietuva", "Latvija", "Estija", "Lenkija")) 
     )
 
 
@@ -746,8 +746,8 @@ print(results_relatst)
 format_p_value <- function(p) {
     if (is.na(p)) return(NA)
     if (p < 2.2e-16) return("<2.2e-16")
-    if (p < 0.001) return(formatC(p, format = "e", digits = 2))  # eksponentinis tik labai mažoms
-    return(formatC(p, format = "f", digits = 3))  # įprastas formatas su 3 skaičiais po kablelio
+    if (p < 0.001) return(formatC(p, format = "e", digits = 2))  
+    return(formatC(p, format = "f", digits = 3))  
 }
 
 create_multiple_regression_tables <- function(countries_data, questions, dependent_var = "math", package = 2) {
@@ -1350,15 +1350,15 @@ analyze_country <- function(country_data) {
     x_limits <- range(breaks_global)
     calculate_avg_histograms <- function(q) {
         histograms <- map(pv_math_cols, function(pv) {
-            # Atsakiusių mokinių duomenys
+
             answered_rows <- country_data[[paste0(q, "_answered")]] == "Atsakyta"
             answered <- country_data[answered_rows, pv]
             weights_answered <- country_data[answered_rows, "w_fstuwt"]
-            # Neatsakiusių mokinių duomenys
+
             not_answered_rows <- country_data[[paste0(q, "_answered")]] == "Neatsakyta"
             not_answered <- country_data[not_answered_rows, pv]
             weights_not_answered <- country_data[not_answered_rows, "w_fstuwt"]
-            # Svertinės histogramų skaičiavimas
+
             h_answered <- hist(answered, breaks = breaks_global, weights = weights_answered, plot = FALSE)
             h_not_answered <- hist(not_answered, breaks = breaks_global, weights = weights_not_answered, plot = FALSE)
             list(
@@ -1533,7 +1533,7 @@ process_country_data <- function(data, country_name) {
             Procentas = round(percent_answered, 3)
         )
         atsakyta_list[[length(atsakyta_list) + 1]] <- row_ans
-        # Neatsakiusiųjų grupė
+
         not_answered_data <- data[data$answered == "Neatsakyta", ]
         tbl_not <- frequency_table(not_answered_data, "math")
         sum_not <- summary(tbl_not)[[1]]
